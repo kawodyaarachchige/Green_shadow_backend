@@ -38,6 +38,7 @@ dependencies {
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.6'
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.1'
 }
 
 tasks.named('test') {
