@@ -7,4 +7,7 @@ public interface UserService {
     void register(UserDTO userDTO);
     JWTAuthResponse login(UserDTO userDTO);
     JWTAuthResponse refresh(String accessToken);
+    void update (UserDTO userDTO);
+    void delete (UserDTO userDTO);
+
 }
