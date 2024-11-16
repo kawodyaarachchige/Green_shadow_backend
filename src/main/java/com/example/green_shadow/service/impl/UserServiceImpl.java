@@ -34,15 +34,16 @@ public class UserServiceImpl implements UserService {
     private JWTService jwtService;
     @Value("${administrator.clarificationCode}")
     private String adminClarificationCode;
-    @Value("{manager.clarificationCode}")
+    @Value("${manager.clarificationCode}")
     private String managerClarificationCode;
-    @Value("{scientist.clarificationCode}")
+    @Value("${scientist.clarificationCode}")
     private String scientistClarificationCode;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
 
     @Override
     public void register(UserDTO userDTO) {
+        System.out.println("hello");
         Role role = userDTO.getRole();
         String roleCode = userDTO.getRoleClarificationCode();
         if ((role == Role.ADMINISTRATIVE && roleCode.equals(adminClarificationCode)) ||
