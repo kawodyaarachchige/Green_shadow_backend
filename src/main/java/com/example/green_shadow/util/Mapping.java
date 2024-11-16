@@ -1,10 +1,7 @@
 package com.example.green_shadow.util;
 
 import com.example.green_shadow.dto.impl.*;
-import com.example.green_shadow.entity.impl.Crop;
-import com.example.green_shadow.entity.impl.Field;
-import com.example.green_shadow.entity.impl.Log;
-import com.example.green_shadow.entity.impl.User;
+import com.example.green_shadow.entity.impl.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -129,5 +126,75 @@ public class Mapping {
             return logDTO;
         }).toList();
     }
+    public Staff mapToStaff(StaffDTO staffDto) {return modelMapper.map(staffDto, Staff.class);}
+    public StaffDTO mapToStaffDTO(Staff staff) {return modelMapper.map(staff, StaffDTO.class);}
+    public List<StaffDTO> mapToStaffDTOList(List<Staff> staffList) {
+        return staffList.stream().map(staff -> {
+            StaffDTO staffDTO = new StaffDTO();
+            staffDTO.setId(staff.getId());
+            staffDTO.setFirstName(staff.getFirstName());
+            staffDTO.setLastName(staff.getLastName());
+            staffDTO.setDesignation(staff.getDesignation());
+            staffDTO.setGender(staff.getGender());
+            staffDTO.setJoinedDate(staff.getJoinedDate());
+            staffDTO.setAddressLine1(staff.getAddressLine1());
+            staffDTO.setAddressLine2(staff.getAddressLine2());
+            staffDTO.setAddressLine3(staff.getAddressLine3());
+            staffDTO.setAddressLine4(staff.getAddressLine4());
+            staffDTO.setAddressLine5(staff.getAddressLine5());
+            staffDTO.setContactNumber(staff.getContactNumber());
+            staffDTO.setEmail(staff.getEmail());
+            staffDTO.setRole(staff.getRole());
+            staffDTO.setFields(
+                    staff.getFields().stream().map(field -> FieldDTO.builder()
+                            .fieldCode(field.getFieldCode())
+                            .fieldName(field.getFieldName())
+                            .image1(field.getImage1())
+                            .image2(field.getImage2())
+                            .fieldLocation(field.getFieldLocation())
+                            .extentSizeOfField(field.getExtentSizeOfField())
+                            .crops(field.getCrops().stream().map(crop -> CropDTO.builder()
+                                    .cropCode(crop.getCropCode())
+                                    .cropCommonName(crop.getCropCommonName())
+                                    .cropScientificName(crop.getCropScientificName())
+                                    .cropImage(crop.getCropImage())
+                                    .category(crop.getCategory())
+                                    .cropSeason(crop.getCropSeason())
+                                    .fieldCode(crop.getField().getFieldCode())
+                                    //.logCode(crop.getLog().getLogCode())
+                                    .build()).toList())
+                            .build()).toList()
+            );
+            staffDTO.setVehicles(
+                    staff.getVehicles().stream().map(vehicle -> VehicleDTO.builder()
+                            .vehicleCode(vehicle.getVehicleCode())
+                            .licensePlateNumber(vehicle.getLicensePlateNumber())
+                            .vehicleCategory(vehicle.getVehicleCategory())
+                            .fuelType(vehicle.getFuelType())
+                            .status(vehicle.getStatus())
+                            .remarks(vehicle.getRemarks())
+                            .staff(vehicle.getStaff().getId())
+                            .build()).toList());
+            staffDTO.setEquipments(mapToEquipmentDTOList(staff.getEquipments()));
+            staffDTO.setLogCode(staff.getLog().getLogCode());
+            return staffDTO;
+        }).toList();
+    }
+    public Vehicle mapToVehicle(VehicleDTO vehicleDTO) {return modelMapper.map(vehicleDTO, Vehicle.class);}
+    public VehicleDTO mapToVehicleDTO(Vehicle vehicle) {return modelMapper.map(vehicle, VehicleDTO.class);}
+    public List<VehicleDTO> mapToVehicleDTOList(List<Vehicle> vehicleList) {return vehicleList.stream().map(vehicle -> {
+        VehicleDTO vehicleDTO = new VehicleDTO();
+        vehicleDTO.setVehicleCode(vehicle.getVehicleCode());
+        vehicleDTO.setLicensePlateNumber(vehicle.getLicensePlateNumber());
+        vehicleDTO.setVehicleCategory(vehicle.getVehicleCategory());
+        vehicleDTO.setFuelType(vehicle.getFuelType());
+        vehicleDTO.setStatus(vehicle.getStatus());
+        vehicleDTO.setRemarks(vehicle.getRemarks());
+        vehicleDTO.setStaff(vehicle.getStaff().getId());
+        return vehicleDTO;
+    }).toList();}
+    public Equipment mapToEquipment(EquipmentDTO equipmentDTO) {return modelMapper.map(equipmentDTO, Equipment.class);}
+    public EquipmentDTO mapToEquipmentDTO(Equipment equipment) {return modelMapper.map(equipment, EquipmentDTO.class);}
+    public List<EquipmentDTO> mapToEquipmentDTOList(List<Equipment> equipmentList) {return equipmentList.stream().map(this::mapToEquipmentDTO).toList();}
 
 }

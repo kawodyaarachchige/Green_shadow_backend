@@ -51,6 +51,10 @@ public class Staff implements SuperEntity {
     @JoinColumn(name = "logCode")
     private Log log;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "staff",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<Equipment> equipments;
+
     public void addField(Field field){
         fields.add(field);
         field.getStaff().add(this);

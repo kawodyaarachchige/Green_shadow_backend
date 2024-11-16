@@ -8,7 +8,7 @@ import com.example.green_shadow.exception.InvalidUserRoleException;
 import com.example.green_shadow.secure.JWTAuthResponse;
 import com.example.green_shadow.service.UserService;
 import com.example.green_shadow.util.Mapping;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

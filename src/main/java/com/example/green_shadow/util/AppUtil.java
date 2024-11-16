@@ -17,4 +17,14 @@ public class AppUtil {
     public static String generateFieldCode() {
         return "FIELD-" + UUID.randomUUID().toString();
     }
+    public static String generateStaffId() {
+        return "STAFF-" + UUID.randomUUID().toString();
+    }
+    public static String generateVehicleCode() {
+        return "VEHICLE-" + UUID.randomUUID().toString();
+    }
+    public static String generateEquipmentId() {
+        return "EQUIPMENT-" + UUID.randomUUID().toString();
+    }
+    
 }

@@ -10,7 +10,7 @@ import com.example.green_shadow.service.CropService;
 import com.example.green_shadow.service.FieldService;
 import com.example.green_shadow.util.AppUtil;
 import com.example.green_shadow.util.Mapping;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
