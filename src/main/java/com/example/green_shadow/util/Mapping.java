@@ -81,5 +81,53 @@ public class Mapping {
     }
     public Log mapToLog(LogDTO logDTO) {return modelMapper.map(logDTO, Log.class); }
     public LogDTO mapToLogDTO(Log log) {return modelMapper.map(log, LogDTO.class); }
+    public List<LogDTO> mapToLogDTOList(List<Log> logList) {
+        return logList.stream().map(log -> {
+            LogDTO logDTO = new LogDTO();
+            logDTO.setLogCode(log.getLogCode());
+            logDTO.setLogDate(log.getLogDate());
+            logDTO.setLogDetails(log.getLogDetails());
+            logDTO.setObservedImage(log.getObservedImage());
+            logDTO.setFields(
+                    log.getFields().stream().map(field -> FieldDTO.builder()
+                            .fieldCode(field.getFieldCode())
+                            .fieldName(field.getFieldName())
+                            .image1(field.getImage1())
+                            .image2(field.getImage2())
+                            .fieldLocation(field.getFieldLocation())
+                            .extentSizeOfField(field.getExtentSizeOfField())
+                            .build()).toList()
+            );
+            logDTO.setCrops(
+                    log.getCrops().stream().map(crop -> CropDTO.builder()
+                            .cropCode(crop.getCropCode())
+                            .cropCommonName(crop.getCropCommonName())
+                            .cropScientificName(crop.getCropScientificName())
+                            .cropImage(crop.getCropImage())
+                            .category(crop.getCategory())
+                            .cropSeason(crop.getCropSeason())
+                            .fieldCode(crop.getField().getFieldCode())
+                            .build()).toList()
+            );
+            logDTO.setStaff(
+                    log.getStaff().stream().map(staff -> StaffDTO.builder()
+                            .id(staff.getId())
+                            .firstName(staff.getFirstName())
+                            .lastName(staff.getLastName())
+                            .designation(staff.getDesignation())
+                            .gender(staff.getGender())
+                            .joinedDate(staff.getJoinedDate())
+                            .addressLine1(staff.getAddressLine1())
+                            .addressLine2(staff.getAddressLine2())
+                            .addressLine3(staff.getAddressLine3())
+                            .addressLine4(staff.getAddressLine4())
+                            .addressLine5(staff.getAddressLine5())
+                            .contactNumber(staff.getContactNumber())
+                            .email(staff.getEmail())
+                            .role(staff.getRole())
+                            .build()).toList());
+            return logDTO;
+        }).toList();
+    }
 
 }
