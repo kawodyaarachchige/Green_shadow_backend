@@ -22,7 +22,7 @@ public class CropController {
     private CropService cropService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('MANGER') or hasRole('SCIENTIST')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     public ResponseEntity<Void> saveCrop(@RequestBody CropDTO cropDTO) {
         cropService.saveCrop(cropDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -32,32 +32,32 @@ public class CropController {
         return cropService.getCrops();
     }
     @PutMapping(value = "/{cropCode}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('MANGER') or hasRole('SCIENTIST')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     public ResponseEntity<Void> updateCrop(@PathVariable("cropCode") String cropCode, @RequestBody CropDTO cropDTO) {
         cropDTO.setCropCode(cropCode);
         cropService.updateCrop(cropDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @DeleteMapping(value = "/{cropCode}")
-    @PreAuthorize("hasRole('MANGER') or hasRole('SCIENTIST')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     public ResponseEntity<Void> deleteCrop(@PathVariable("cropCode") String cropCode) {
         cropService.deleteCrop(cropCode);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @PostMapping(value = "/log", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('MANGER') or hasRole('SCIENTIST')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     public ResponseEntity<Void> createLogForCrop(@RequestPart("cropCode") String cropCode, @RequestPart("logCode") String logCode) {
         cropService.createLogForCrop(cropCode, logCode);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @DeleteMapping(value = "/log", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('MANGER') or hasRole('SCIENTIST')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     public ResponseEntity<Void> deleteLogForCrop(@RequestPart("cropCode") String cropCode, @RequestPart("logCode") String logCode) {
         cropService.deleteLogForCrop(cropCode, logCode);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('MANGER') or hasRole('SCIENTIST')")
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     public ResponseEntity<Void> uploadImage(@RequestPart("cropCode") String cropCode, @RequestPart("image") MultipartFile image) throws IOException {
         byte [] imageBytes = image.getBytes();
         String imageString = AppUtil.convertImageToBase64(imageBytes);

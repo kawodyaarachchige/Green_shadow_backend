@@ -23,6 +23,7 @@ public class Staff implements SuperEntity {
     private String id;
     private String firstName;
     private String lastName;
+    private String designation;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private Date joinedDate;

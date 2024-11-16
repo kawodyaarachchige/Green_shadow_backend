@@ -1,10 +1,9 @@
 package com.example.green_shadow.util;
 
-import com.example.green_shadow.dto.impl.CropDTO;
-import com.example.green_shadow.dto.impl.FieldDTO;
-import com.example.green_shadow.dto.impl.UserDTO;
+import com.example.green_shadow.dto.impl.*;
 import com.example.green_shadow.entity.impl.Crop;
 import com.example.green_shadow.entity.impl.Field;
+import com.example.green_shadow.entity.impl.Log;
 import com.example.green_shadow.entity.impl.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class Mapping {
     public List<CropDTO> mapToCropDTOList(List<Crop> crops) {return crops.stream().map(this::mapToCropDTO).toList(); }
     public Field mapToField(FieldDTO fieldDTO) {return modelMapper.map(fieldDTO, Field.class); }
     public FieldDTO mapToFieldDTO(Field field) {return modelMapper.map(field, FieldDTO.class); }
-   /* public List<FieldDTO> mapToFieldDTOList(List<Field> fieldList) {
+    public List<FieldDTO> mapToFieldDTOList(List<Field> fieldList) {
         return fieldList.stream().map(field -> {
             FieldDTO fieldDTO = new FieldDTO();
             fieldDTO.setFieldCode(field.getFieldCode());
@@ -46,7 +45,6 @@ public class Mapping {
                             .category(crop.getCategory())
                             .cropSeason(crop.getCropSeason())
                             .fieldCode(crop.getField().getFieldCode())
-                            //.logCode(crop.getLog().getLogCode())
                             .build()).toList()
             );
             fieldDTO.setStaff(
@@ -71,7 +69,7 @@ public class Mapping {
                     field.getEquipments().stream().map(equipment -> EquipmentDTO.builder()
                             .equipmentId(equipment.getEquipmentId())
                             .name(equipment.getName())
-                            .type(equipment.getType())
+                            .equipmentType(equipment.getEquipmentType())
                             .status(equipment.getStatus())
                             .staffId(equipment.getStaff().getId())
                             .fieldCode(equipment.getField().getFieldCode())
@@ -80,5 +78,8 @@ public class Mapping {
             fieldDTO.setLogCode(field.getLog().getLogCode());
             return fieldDTO;
         }).toList();
-    }*/
+    }
+    public Log mapToLog(LogDTO logDTO) {return modelMapper.map(logDTO, Log.class); }
+    public LogDTO mapToLogDTO(Log log) {return modelMapper.map(log, LogDTO.class); }
+
 }

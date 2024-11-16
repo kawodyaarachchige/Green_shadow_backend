@@ -5,6 +5,7 @@ import com.example.green_shadow.dto.impl.FieldDTO;
 import com.example.green_shadow.entity.impl.Field;
 import com.example.green_shadow.exception.NoSuchEntityException;
 import com.example.green_shadow.service.FieldService;
+import com.example.green_shadow.util.AppUtil;
 import com.example.green_shadow.util.Mapping;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +25,14 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public void saveField(FieldDTO fieldDTO) {
-
+    fieldDTO.setFieldCode(AppUtil.generateFieldCode());
+    fieldDAO.save(mapping.mapToField(fieldDTO));
+    log.info("Field Saved :)" + fieldDTO.getFieldCode());
     }
 
     @Override
     public List<FieldDTO> getFields() {
-        return List.of();
+        return mapping.mapToFieldDTOList(fieldDAO.findAll());
     }
 
     @Override
