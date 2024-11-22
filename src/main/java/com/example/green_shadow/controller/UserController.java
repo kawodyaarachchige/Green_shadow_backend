@@ -31,7 +31,6 @@ public class UserController {
     @PostMapping(value = "/refresh")
     public ResponseEntity<JWTAuthResponse> refresh(@RequestParam String accessToken) {
         return ResponseEntity.ok(userService.refresh(accessToken)) ;
-
     }
 
 }

@@ -32,7 +32,9 @@ public class SecurityConfig {
                         .requestMatchers("api/v1/users/**").permitAll()
                         .anyRequest()
                         .authenticated()
-                ).formLogin(Customizer.withDefaults())
+                )
+                .cors(Customizer.withDefaults()) // Enable CORS
+                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
