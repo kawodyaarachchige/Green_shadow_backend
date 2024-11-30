@@ -27,10 +27,11 @@ public class FieldServiceImpl implements FieldService {
     private LogServiceImpl logService;
 
     @Override
-    public void saveField(FieldDTO fieldDTO) {
+    public String saveField(FieldDTO fieldDTO) {
         fieldDTO.setFieldCode(AppUtil.generateFieldCode());
         fieldDAO.save(mapping.mapToField(fieldDTO));
         log.info("Field Saved :)" + fieldDTO.getFieldCode());
+        return fieldDTO.getFieldCode();
     }
 
     @Override
@@ -67,12 +68,12 @@ public class FieldServiceImpl implements FieldService {
         Optional<Field> fetchedField = fieldDAO.findById(fieldCode);
         if (fetchedField.isPresent()) {
             Field field = fetchedField.get();
-            if (image1 != null) {
+            if (image1 == null) {
                 field.setImage1(field.getImage1());
             } else {
                 field.setImage1(image1);
             }
-            if (image2 != null) {
+            if (image2 == null) {
                 field.setImage2(field.getImage2());
             } else {
                 field.setImage2(image2);

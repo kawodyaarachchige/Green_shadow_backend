@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/fields")
@@ -22,9 +24,11 @@ public class FieldController {
     private FieldService fieldService;
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
-    public ResponseEntity<Void> saveField(@RequestBody FieldDTO fieldDTO) {
-        fieldService.saveField(fieldDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Map<String, String>> saveField(@RequestBody FieldDTO fieldDTO) {
+        String savedFieldCode = fieldService.saveField(fieldDTO);
+        Map<String, String> response = new HashMap<>();
+        response.put("fieldCode", savedFieldCode);
+        return ResponseEntity.ok(response);
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<FieldDTO> getFields() {

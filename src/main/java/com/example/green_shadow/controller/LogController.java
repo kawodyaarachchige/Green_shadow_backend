@@ -45,7 +45,7 @@ public class LogController {
     }
     @DeleteMapping(value = "/{logCode}")
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
-    public ResponseEntity<Void> deleteLog(@RequestParam("logCode") String logCode) {
+    public ResponseEntity<Void> deleteLog(@PathVariable("logCode") String logCode) {
         logService.deleteLog(logCode);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

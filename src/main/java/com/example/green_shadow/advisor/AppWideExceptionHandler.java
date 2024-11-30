@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class AppWideExceptionHandler {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<String> handleException(Exception exception) {
-        log.error(exception.getMessage());
+        log.error(exception.getMessage()+" "+exception.getCause());
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 

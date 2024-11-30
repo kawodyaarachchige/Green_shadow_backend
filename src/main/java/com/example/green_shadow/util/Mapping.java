@@ -77,7 +77,15 @@ public class Mapping {
         }).toList();
     }
     public Log mapToLog(LogDTO logDTO) {return modelMapper.map(logDTO, Log.class); }
-    public LogDTO mapToLogDTO(Log log) {return modelMapper.map(log, LogDTO.class); }
+    public LogDTO mapToLogDTO(Log log) {
+        try{
+            return modelMapper.map(log, LogDTO.class);
+        }catch (Exception e){
+            System.err.println("Track out 03");
+            return null;
+        }
+
+    }
     public List<LogDTO> mapToLogDTOList(List<Log> logList) {
         return logList.stream().map(log -> {
             LogDTO logDTO = new LogDTO();
@@ -127,7 +135,34 @@ public class Mapping {
         }).toList();
     }
     public Staff mapToStaff(StaffDTO staffDto) {return modelMapper.map(staffDto, Staff.class);}
-    public StaffDTO mapToStaffDTO(Staff staff) {return modelMapper.map(staff, StaffDTO.class);}
+    public StaffDTO mapToStaffDTO(Staff staff) {
+        StaffDTO staffDTO = new StaffDTO();
+        staffDTO.setId(staff.getId());
+        staffDTO.setFirstName(staff.getFirstName());
+        staffDTO.setLastName(staff.getLastName());
+        staffDTO.setDesignation(staff.getDesignation());
+        staffDTO.setGender(staff.getGender());
+        staffDTO.setJoinedDate(staff.getJoinedDate());
+        staffDTO.setAddressLine1(staff.getAddressLine1());
+        staffDTO.setAddressLine2(staff.getAddressLine2());
+        staffDTO.setAddressLine3(staff.getAddressLine3());
+        staffDTO.setAddressLine4(staff.getAddressLine4());
+        staffDTO.setAddressLine5(staff.getAddressLine5());
+        staffDTO.setContactNumber(staff.getContactNumber());
+        staffDTO.setEmail(staff.getEmail());
+        staffDTO.setRole(staff.getRole());
+        staffDTO.setFields(
+                staff.getFields().stream().map(field -> FieldDTO.builder()
+                        .fieldCode(field.getFieldCode())
+                        .fieldName(field.getFieldName())
+                        .image1(field.getImage1())
+                        .image2(field.getImage2())
+                        .fieldLocation(field.getFieldLocation())
+                        .extentSizeOfField(field.getExtentSizeOfField())
+                        .build()).toList()
+        );
+        return staffDTO;
+    }
     public List<StaffDTO> mapToStaffDTOList(List<Staff> staffList) {
         return staffList.stream().map(staff -> {
             StaffDTO staffDTO = new StaffDTO();

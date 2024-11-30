@@ -5,7 +5,7 @@ import com.example.green_shadow.dto.impl.FieldDTO;
 import java.util.List;
 
 public interface FieldService {
-    void saveField(FieldDTO fieldDTO);
+    String saveField(FieldDTO fieldDTO);
     List<FieldDTO> getFields();
     void updateField(String fieldCode, FieldDTO fieldDTO);
     void deleteField(String fieldCode);
