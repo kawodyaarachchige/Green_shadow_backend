@@ -114,7 +114,68 @@ public class UserServiceImpl implements UserService {
         );
         if(auth.isAuthenticated()){
             userDAO.deleteById(userDTO.getEmail());
+            log.info("User Deleted :)" + userDTO.getEmail());
         }
 
+    }
+
+    @Override
+    public void updatePassword(UserDTO userDTO, String newPassword) {
+        Authentication auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        userDTO.getEmail(), userDTO.getPassword()
+                )
+        );
+        if (auth.isAuthenticated()){
+            User fetchedUser = userDAO.findByEmail(userDTO.getEmail());
+            if(fetchedUser == null){
+                throw new UsernameNotFoundException("User Not Found :(");
+            }
+            fetchedUser.setPassword(encoder.encode(newPassword));
+            userDAO.save(fetchedUser);
+        }
+    }
+
+    @Override
+    public void updateUserRole(UserDTO userDTO) {
+        Role role = userDTO.getRole();
+        String roleCode = userDTO.getRoleClarificationCode();
+        if ((role == Role.ADMINISTRATIVE && roleCode.equals(adminClarificationCode)) ||
+                (role == Role.MANAGER && roleCode.equals(managerClarificationCode)) ||
+                (role == Role.SCIENTIST && roleCode.equals(scientistClarificationCode))
+        ) {
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            userDTO.getEmail(), userDTO.getPassword()
+                    )
+            );
+            if(auth.isAuthenticated()){
+                User fetchedUser = userDAO.findByEmail(userDTO.getEmail());
+                if(fetchedUser == null){
+                    throw new UsernameNotFoundException("User Not Found :(");
+                }
+                fetchedUser.setRole(role);
+                userDAO.save(fetchedUser);
+            }
+        }else{
+            throw new InvalidUserRoleException("Invalid Role Or Clarification Code :(");
+        }
+    }
+
+    @Override
+    public String getUserRole(UserDTO userDTO) {
+        Authentication auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        userDTO.getEmail(), userDTO.getPassword()
+                )
+        );
+        if(auth.isAuthenticated()){
+            User fetchedUser = userDAO.findByEmail(userDTO.getEmail());
+            if(fetchedUser == null){
+                throw new UsernameNotFoundException("User Not Found :(");
+            }
+            return fetchedUser.getRole().toString();
+        }
+        return null;
     }
 }

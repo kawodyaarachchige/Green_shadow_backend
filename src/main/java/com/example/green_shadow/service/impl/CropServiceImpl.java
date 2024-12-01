@@ -31,10 +31,11 @@ public class CropServiceImpl implements CropService {
     @Autowired
     private FieldService fieldService;
     @Override
-    public void saveCrop(CropDTO cropDTO) {
+    public String saveCrop(CropDTO cropDTO) {
         cropDTO.setCropCode(AppUtil.generateCropCode(cropDTO.getCategory()));
         cropDAO.save(mapping.mapToCrop(cropDTO));
         log.info("Crop Saved :)" + cropDTO.getCropCode());
+        return cropDTO.getCropCode();
     }
 
     @Override

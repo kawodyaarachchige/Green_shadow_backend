@@ -33,10 +33,11 @@ public class StaffServiceImpl implements StaffService {
     private FieldDAO fieldDAO;
 
     @Override
-    public void saveStaff(StaffDTO staffDTO) {
+    public String saveStaff(StaffDTO staffDTO) {
         staffDTO.setId(AppUtil.generateStaffId());
         staffDAO.save(mapping.mapToStaff(staffDTO));
         log.info("Staff saved with id {}", staffDTO.getId());
+        return staffDTO.getId();
     }
 
     @Override

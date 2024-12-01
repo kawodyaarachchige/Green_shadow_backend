@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/crops")
@@ -23,9 +25,11 @@ public class CropController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
-    public ResponseEntity<Void> saveCrop(@RequestBody CropDTO cropDTO) {
-        cropService.saveCrop(cropDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Map<String, String>> saveCrop(@RequestBody CropDTO cropDTO) {
+        String cropSaved = cropService.saveCrop(cropDTO);
+        Map<String, String> response = new HashMap<>();
+        response.put("cropCode", cropSaved);
+        return ResponseEntity.ok(response);
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDTO> getCrops() {
@@ -50,7 +54,7 @@ public class CropController {
         cropService.createLogForCrop(cropCode, logCode);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @DeleteMapping(value = "/log", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @DeleteMapping(value = "/logs", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     public ResponseEntity<Void> deleteLogForCrop(@RequestPart("cropCode") String cropCode, @RequestPart("logCode") String logCode) {
         cropService.deleteLogForCrop(cropCode, logCode);

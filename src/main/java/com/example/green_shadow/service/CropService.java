@@ -5,7 +5,7 @@ import com.example.green_shadow.dto.impl.CropDTO;
 import java.util.List;
 
 public interface CropService {
-    void saveCrop (CropDTO cropDTO);
+    String saveCrop (CropDTO cropDTO);
     List<CropDTO> getCrops ();
     void saveImage (String cropCode, String image);
     void updateCrop (CropDTO cropDTO);

@@ -9,5 +9,7 @@ public interface UserService {
     JWTAuthResponse refresh(String accessToken);
     void update (UserDTO userDTO);
     void delete (UserDTO userDTO);
-
+    void updatePassword (UserDTO userDTO,String newPassword);
+    void updateUserRole (UserDTO userDTO);
+    String getUserRole(UserDTO userDTO);
 }

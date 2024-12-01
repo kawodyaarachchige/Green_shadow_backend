@@ -6,7 +6,7 @@ import com.example.green_shadow.entity.Gender;
 import java.util.List;
 
 public interface StaffService {
-    void saveStaff(StaffDTO staffDTO);
+    String saveStaff(StaffDTO staffDTO);
     List<StaffDTO> getStaffs();
     void updateStaff(String id,StaffDTO staffDTO);
     void deleteStaff(String id);

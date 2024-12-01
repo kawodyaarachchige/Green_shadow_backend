@@ -39,7 +39,7 @@ public class LogController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST') or hasRole('ADMINISTRATIVE')")
     public List<LogDTO> getLogs() {
         return logService.getAllLogs();
     }

@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/staff")
@@ -20,14 +22,16 @@ public class StaffController {
     private StaffService staffService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
-    public ResponseEntity<Void> saveStaff(@RequestBody StaffDTO staffDTO) {
-        staffService.saveStaff(staffDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
+    public ResponseEntity<Map<String,String>> saveStaff(@RequestBody StaffDTO staffDTO) {
+        String savedStaffID = staffService.saveStaff(staffDTO);
+        Map<String,String> response = new HashMap<>();
+        response.put("staffId",savedStaffID);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     public List<StaffDTO> getStaff() {
         return staffService.getStaffs();
     }
