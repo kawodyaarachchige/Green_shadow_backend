@@ -61,7 +61,6 @@ public class LogServiceImpl implements LogService {
     public void deleteLog(String logCode) {
         logDAO.deleteById(logCode);
         log.info("Log Deleted :)" + logCode);
-
     }
 
     @Override

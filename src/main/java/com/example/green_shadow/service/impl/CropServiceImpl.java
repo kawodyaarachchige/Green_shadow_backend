@@ -48,9 +48,11 @@ public class CropServiceImpl implements CropService {
         Optional<Crop> fetchedCrop = cropDAO.findById(cropCode);
         if (fetchedCrop.isPresent()) {
             Crop crop = fetchedCrop.get();
-            crop.setCropImage(image);
-            cropDAO.save(crop);
-            log.info("Image Saved :)" + cropCode);
+            if (image != null) {
+                crop.setCropImage(image);
+                cropDAO.save(crop);
+                log.info("Image Saved :)" + cropCode);
+            }
         }
         else {
             throw new NoSuchEntityException("Crop", cropCode);
@@ -67,7 +69,6 @@ public class CropServiceImpl implements CropService {
             crop.setCropScientificName(cropDTO.getCropScientificName());
             crop.setCategory(cropDTO.getCategory());
             crop.setCropSeason(cropDTO.getCropSeason());
-            crop.setField(mapping.mapToField(fieldService.findField(cropDTO.getFieldCode())));
             cropDAO.save(crop);
             log.info("Crop Updated :)" + cropDTO.getCropCode());
         }

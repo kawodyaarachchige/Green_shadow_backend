@@ -31,7 +31,7 @@ public class StaffController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE') or hasRole('SCIENTIST')")
     public List<StaffDTO> getStaff() {
         return staffService.getStaffs();
     }

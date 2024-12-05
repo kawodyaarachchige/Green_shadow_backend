@@ -67,8 +67,7 @@ public class StaffServiceImpl implements StaffService {
             staff.setLog(mapping.mapToLog(logService.findLog(staffDTO.getLogCode())));
             staffDAO.save(staff);
             log.info("Staff updated with id {}", id);
-        }
-        else {
+        } else {
             throw new NoSuchEntityException("Staff", id);
         }
 
@@ -76,18 +75,18 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public void deleteStaff(String id) {
-    staffDAO.deleteById(id);
-    log.info("Staff deleted with id {}", id);
+        staffDAO.deleteById(id);
+        log.info("Staff deleted with id {}", id);
     }
 
     @Override
     public StaffDTO findStaff(String id) {
         Optional<Staff> fetchedStaff = staffDAO.findById(id);
-        if(fetchedStaff.isPresent()){
+        if (fetchedStaff.isPresent()) {
             Staff staff = fetchedStaff.get();
             return mapping.mapToStaffDTO(staff);
-        }else {
-            throw new NoSuchEntityException("Staff",id);
+        } else {
+            throw new NoSuchEntityException("Staff", id);
         }
     }
 

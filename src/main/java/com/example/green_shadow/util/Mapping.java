@@ -81,10 +81,9 @@ public class Mapping {
         try{
             return modelMapper.map(log, LogDTO.class);
         }catch (Exception e){
-            System.err.println("Track out 03");
+            System.err.println("Track out 03 in Mapping");
             return null;
         }
-
     }
     public List<LogDTO> mapToLogDTOList(List<Log> logList) {
         return logList.stream().map(log -> {
