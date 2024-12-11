@@ -38,7 +38,4 @@ public class Field implements SuperEntity {
     @ManyToOne
     @JoinColumn(name = "logCode")
     private Log log;
-
-
-
 }

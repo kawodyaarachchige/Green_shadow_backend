@@ -30,3 +30,17 @@ This project is a **Crop Monitoring System Backend** built using **Java Spring B
 - **Comprehensive Logging**: Tracks system activity with INFO, DEBUG, WARN, and ERROR levels.
 
 ---
+
+### Role Permissions
+
+- **MANAGER**: Has full CRUD (Create, Read, Update, Delete) access to all system entities.
+- **ADMINISTRATOR**: Limited to read-only access for crop, field, and log-related data.
+- **SCIENTIST**: Restricted from modifying staff, vehicle, and equipment records.  
+
+---
+
+### License
+
+This project is released under the [MIT License](LICENSE).
+
+

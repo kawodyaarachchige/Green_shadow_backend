@@ -4,6 +4,7 @@ import com.example.green_shadow.dao.EquipmentDAO;
 import com.example.green_shadow.dto.impl.EquipmentDTO;
 import com.example.green_shadow.entity.Status;
 import com.example.green_shadow.entity.impl.Equipment;
+import com.example.green_shadow.entity.impl.Field;
 import com.example.green_shadow.exception.NoSuchEntityException;
 import com.example.green_shadow.service.EquipmentService;
 import com.example.green_shadow.service.FieldService;
@@ -36,8 +37,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         equipmentDTO.setEquipmentId(AppUtil.generateEquipmentId());
         equipmentDao.save(mapping.mapToEquipment(equipmentDTO));
         log.info("Equipment Saved :)" + equipmentDTO.getEquipmentId());
-
-
     }
 
     @Override
@@ -48,13 +47,14 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public void updateEquipment(String equipmentId, EquipmentDTO equipmentDTO) {
         Optional<Equipment> fetchedEquipment = equipmentDao.findById(equipmentId);
-        if (fetchedEquipment.isPresent()) {
+        Optional<Field> fieldByEquipmentId = equipmentDao.findFieldByEquipmentId(equipmentId);
+        if (fetchedEquipment.isPresent()&& fieldByEquipmentId.isPresent()) {
             Equipment equipment = fetchedEquipment.get();
             equipment.setName(equipmentDTO.getName());
             equipment.setEquipmentType(equipmentDTO.getEquipmentType());
             equipment.setStatus(equipmentDTO.getStatus());
             equipment.setStaff(mapping.mapToStaff(staffService.findStaff(equipmentDTO.getStaffId())));
-            equipment.setField(mapping.mapToField(fieldService.findField(equipmentDTO.getFieldCode())));
+            equipment.setField(fieldByEquipmentId.get());
             equipmentDao.save(equipment);
             log.info("Equipment Updated :)" + equipmentId);}
         else {

@@ -5,6 +5,7 @@ import com.example.green_shadow.dao.StaffDAO;
 import com.example.green_shadow.dto.impl.StaffDTO;
 import com.example.green_shadow.entity.Gender;
 import com.example.green_shadow.entity.impl.Field;
+import com.example.green_shadow.entity.impl.Log;
 import com.example.green_shadow.entity.impl.Staff;
 import com.example.green_shadow.exception.NoSuchEntityException;
 import com.example.green_shadow.service.LogService;
@@ -48,7 +49,8 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public void updateStaff(String id, StaffDTO staffDTO) {
         Optional<Staff> fetchedStaff = staffDAO.findById(id);
-        if (fetchedStaff.isPresent()) {
+        Optional<Log> logCodeByStaffId = staffDAO.findLogCodeByStaffId(id);
+        if (fetchedStaff.isPresent()&& logCodeByStaffId.isPresent()) {
             Staff staff = fetchedStaff.get();
             staff.setFirstName(staffDTO.getFirstName());
             staff.setLastName(staffDTO.getLastName());
@@ -64,7 +66,7 @@ public class StaffServiceImpl implements StaffService {
             staff.setEmail(staffDTO.getEmail());
             staff.setRole(staffDTO.getRole());
             staff.setDob(staffDTO.getDob());
-            staff.setLog(mapping.mapToLog(logService.findLog(staffDTO.getLogCode())));
+            staff.setLog(logCodeByStaffId.get());
             staffDAO.save(staff);
             log.info("Staff updated with id {}", id);
         } else {

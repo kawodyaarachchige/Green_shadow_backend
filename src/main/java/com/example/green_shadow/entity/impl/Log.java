@@ -24,13 +24,13 @@ public class Log implements SuperEntity {
     @Column(columnDefinition = "LONGTEXT")
     private String observedImage;
     @JsonIgnore
-    @OneToMany(mappedBy = "log",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "log",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<Field> fields;
     @JsonIgnore
-    @ManyToMany(mappedBy = "logs",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "logs",fetch = FetchType.LAZY)
     private List<Crop> crops;
     @JsonIgnore
-    @OneToMany(mappedBy = "log",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "log",fetch = FetchType.LAZY)
     private List<Staff> staff;
 
     public void addCrop(Crop crop) {
@@ -41,6 +41,4 @@ public class Log implements SuperEntity {
         crops.remove(crop);
         crop.getLogs().remove(this);
     }
-
-
 }

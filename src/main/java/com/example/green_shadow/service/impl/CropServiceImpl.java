@@ -80,7 +80,7 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public void deleteCrop(String cropCode) {
-        cropDAO.deleteById(cropCode);
+        cropDAO.deleteByCropCode(cropCode);
         log.info("Crop Deleted :)" + cropCode);
 
     }

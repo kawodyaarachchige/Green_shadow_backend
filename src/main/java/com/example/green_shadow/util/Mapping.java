@@ -77,14 +77,15 @@ public class Mapping {
         }).toList();
     }
     public Log mapToLog(LogDTO logDTO) {return modelMapper.map(logDTO, Log.class); }
-    public LogDTO mapToLogDTO(Log log) {
+    public LogDTO mapToLogDTO(Log log) {return modelMapper.map(log, LogDTO.class); }
+    /*public LogDTO mapToLogDTO(Log log) {
         try{
             return modelMapper.map(log, LogDTO.class);
         }catch (Exception e){
             System.err.println("Track out 03 in Mapping");
             return null;
         }
-    }
+    }*/
     public List<LogDTO> mapToLogDTOList(List<Log> logList) {
         return logList.stream().map(log -> {
             LogDTO logDTO = new LogDTO();

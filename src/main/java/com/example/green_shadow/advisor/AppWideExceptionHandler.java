@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Slf4j
-
 public class AppWideExceptionHandler {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<String> handleException(Exception exception) {
